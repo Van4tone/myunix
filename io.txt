@@ -72,8 +72,11 @@ cmd的功能
 
 
 
+ioctl
 
+int ioctl(int fd,int request,...);
 
+第三个参数一般是一个变量或者一个结构体指针
 
 
 
