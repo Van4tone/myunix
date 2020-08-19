@@ -37,12 +37,24 @@ int fflush(FILE *fp);
 
 打开流
 fopen
+	FILE *fopen(const char *restrict pathname, const char *restrict type);
+	打开一个指定的文件
+	
+
 freopen
+	FILE *freopen(const char *restrict pathname, const char *restrict type,
+			FILE *restrict fp);
+	在一个指定的流上打开一个指定的文件，若流已经打开，则先关闭该流。
+	若流已经定向，则freopen清除该定向。
+
 fdopen
+	FILE *fdopen(int fileds, const char *type);
+	获取一个现有的文件描述符，并使一个标准的I/O流于该描述符相结合。
 
-
-
-
+-------------------------------------------------------------	
+      |
+type  |
+------------------------------------------------------------
 
 
 
