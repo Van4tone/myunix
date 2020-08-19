@@ -51,18 +51,82 @@ fdopen
 	FILE *fdopen(int fileds, const char *type);
 	获取一个现有的文件描述符，并使一个标准的I/O流于该描述符相结合。
 
--------------------------------------------------------------	
-      |
-type  |
-------------------------------------------------------------
+------------------------------------------------------------|	
+             |                                              |
+type         |   说明                                       |
+------------------------------------------------------------|
+r或rb        |  为读而打开                                  |
+------------------------------------------------------------|
+w或wb        |  把文件截短至0，或为写而创建                 |
+------------------------------------------------------------|
+a或ab        |  添加；为在文件尾写而打开，或者为写而创建    |
+------------------------------------------------------------|      
+r+或r+b或rb+ |  为读和写而打开                              |
+------------------------------------------------------------|
+w+或w+b或wb+ |  把文件截短至0，或为读和写而打开             |
+------------------------------------------------------------|
+a+或a+b或ab+ |  为在文件尾读和写而打开或创建                |
+------------------------------------------------------------|  	  	
+
+输入函数
+int getc(FILE *fp);
+int fgetc(FILE *fp);
+int getchar(void);
+
+getchar等同于getc(stdin).
+getc 可以被实现为宏，fgetc不可以。
+getc的参数不可以是具有副作用的表达式。
+fgetc一定是一个函数，允许fgetc作为一个参数传递给另一个函数。
+
+输出函数
+int putc(int c,FILE *fp);
+int fputc(int c,FILE *fp);
+int putchar(int c);
+putchar(c)等效于putc(c,stdout) putc可实现为宏，fputc不能。
 
 
+每次一行IO
+
+char *fgets(char *restrict buf,int n,FILE *restrict fp);
+char *gets(char *buf);
+这2个函数将读入的行送入指定缓冲区地址中。
+
+fgets必须指定缓冲区的长度n。此函数一直读到下一个换行符为止。但是不超过n-1个字符，读入的字符被送入缓冲区。
+缓冲区以null字符结尾。
+若该行（包括最后一换行符）的字符数超过n-1
+则fgets只返回一个不完整的行，但是缓冲区总是以null字符结尾。
+对fgets的下一次调用会继续使用该行。
+
+fputs和puts提供每次输出一行的功能
+int fputs(const char *restrict str, FILE *restrict fp);
+int puts(const char *str);
+
+fputs 将一个null字符终止的字符串写到指定的流上，尾端的null字符不写出。
+	  这里并不一定每次输出一行，因为它并不要求在null字符之前是一个换行符。
+	  通常null字符之前是一个换行符，但并不总是如此。
+puts
+     将一个以null符终止的字符串写到标准输出，终止符不写出。但是puts然后将一个换行符写到标准输出。
+
+puts 会在输出完一个字符后再输出一个换行符到标准输出，但是fputs不会。
 
 
+格式化IO
 
+格式化输出
 
+int printf(const char *restrict format,...);
+int fprintf(FILE *restrict fp, const char *restrict format, ...);
+int sprintf(char *restrict buf, const char *restrict format,...);
+int snprintf(char *restrict buf, size_t n, const char *restrict format, ...);
 
-
+printf 是将格式化数据写到标准输出上
+fprintf 是写到指定的流上
+sprintf 将格式化字符送到数组buf中，并在数组的尾端加一个null字节，null字节并不包括在返回值中。
+		sprintf函数可能导致缓冲区溢出。调用者要确保这个缓冲区足够大。
+snprintf 缓冲区的长度是一个显式的参数n.超过缓冲区尾端的任何字符都被丢弃。
+		如果缓冲区够大，函数返回写入缓冲区的字符数，该返回值不包括null字节
+		如果函数返回小于缓冲区长度n的值，那么没有截短输出。
+		若发生一个编码错误，返回值为负值。
 
 
 
