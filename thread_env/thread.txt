@@ -106,5 +106,16 @@ C程序的存储空间布局
 
 	int *getenv(const char *name);
 	此函数返回的指针指向name=value字符串中的value
+	
+	int putenv(char *str);
+	int setenv(const char *name, const char *value, int rewrite);
+	int unsetenv(const char *name);
+
+setjmp和longjmp
+	
+
+
+
+
 
  
