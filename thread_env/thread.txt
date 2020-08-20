@@ -101,7 +101,10 @@ C程序的存储空间布局
 			若realloc调用的ptr是一个空指针，则等效于malloc
 
 环境变量
+	
+	环境字符串通常形式   name=value
 
-
+	int *getenv(const char *name);
+	此函数返回的指针指向name=value字符串中的value
 
  
