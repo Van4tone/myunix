@@ -113,6 +113,13 @@ C程序的存储空间布局
 
 setjmp和longjmp
 	
+	可以在函数间实现跳转，对于处理发生在深层嵌套函数调用中的出错非常有用。
+	
+	非局部goto函数 setjmp longjmp
+	可以在栈上跳过若干调用帧，返回到当前函数调用路径上的某一个函数。
+	
+	int setjmp(jmp_buf env);
+	void longjmp(jmp_buf env, int val);
 
 
 
